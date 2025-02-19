@@ -2,7 +2,7 @@ import math
 from typing import Generator
 
 
-def get_sum_of_multiples(limit: int, *dividers: int) -> int:
+def sum_multiples_divisible_by(limit: int, *dividers: int) -> int:
     """ Get sum of multiples which are divisible at least by one of provided dividers
 
     The algorithm goes through each possible multiple and checks
@@ -18,7 +18,7 @@ def get_sum_of_multiples(limit: int, *dividers: int) -> int:
         if is_divided_multiple:
            sum_of_multiples += multiple
     return sum_of_multiples
-print("Result from functional summarizer:", get_sum_of_multiples(1000, 2, 6, 8))
+print("Result from functional summarizer:", sum_multiples_divisible_by(1000, 3, 5))
 
 
 class MultiplesSummarizer:
@@ -55,13 +55,13 @@ class OptimizedMultiplesSummarizer(MultiplesSummarizer):
         elif len(self._dividers) == 2:
             divider1 = self._dividers[0]
             divider2 = self._dividers[1]
-            total = self._get_sum_divisible_by(divider1) + self._get_sum_divisible_by(divider2)
-            total -= self._get_sum_divisible_by(math.lcm(divider1, divider2))
+            total = self._sum_multiples_divisible_by(divider1) + self._sum_multiples_divisible_by(divider2)
+            total -= self._sum_multiples_divisible_by(math.lcm(divider1, divider2))
         else:
             total = super().sum()
         return total
 
-    def _get_sum_divisible_by(self, n: int) -> int:
+    def _sum_multiples_divisible_by(self, n: int) -> int:
         """ Return sum of multiples divisible by n.
 
         Let's imagine n=3 and limit=16.
@@ -73,8 +73,8 @@ class OptimizedMultiplesSummarizer(MultiplesSummarizer):
 
 multiples_summarizer = OptimizedMultiplesSummarizer(1000)
 print("Result from optimized summarizer:", multiples_summarizer
-    .add_divider(2)
-    .add_divider(6)
+    .add_divider(3)
+    .add_divider(5)
     .add_divider(8)
     .sum()
 )
