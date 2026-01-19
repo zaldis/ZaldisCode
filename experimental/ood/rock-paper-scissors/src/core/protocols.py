@@ -1,0 +1,9 @@
+from typing import Protocol
+
+from src.core.models import GameMove, Player
+
+
+class UI(Protocol):
+    def ask_user_move(self) -> GameMove: ...
+    def display_game_state(self, score_table: dict[Player, int], games: int, first_player_move: GameMove, second_player_move: GameMove) -> None: ...
+    def display_game_over(self, winner: Player): ...
