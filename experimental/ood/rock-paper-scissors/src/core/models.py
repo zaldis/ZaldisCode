@@ -1,12 +1,17 @@
 from enum import StrEnum
 from dataclasses import dataclass
-from typing import Callable
 
 
 class GameMove(StrEnum):
     ROCK = 'Rock'
     SCISSORS = 'Scissors'
     PAPER = 'Paper'
+
+
+class JudgeVerdict(StrEnum):
+    FIRST_PLAYER = 'FirstPlayer'
+    SECOND_PLAYER = 'SecondPlayer'
+    DRAW = 'Draw'
 
 
 @dataclass
@@ -21,18 +26,14 @@ class Player:
         return self.name == other.name
 
 
-class JudgeVerdict(StrEnum):
-    FIRST_PLAYER = 'FirstPlayer'
-    SECOND_PLAYER = 'SecondPlayer'
-    DRAW = 'Draw'
-
 @dataclass
-class GameSettings:
-    from .protocols import UI
-    BotMoveStrategy = Callable[[], GameMove]
+class GameState:
+    number_of_played_games: int
 
     first_player: Player
+    first_player_move: GameMove
+    first_player_score: int
+
     second_player: Player
-    bot_strategy: BotMoveStrategy
-    win_rounds: int
-    ui: UI
+    second_player_move: GameMove
+    second_player_score: int
